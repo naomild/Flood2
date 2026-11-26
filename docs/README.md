@@ -16,6 +16,7 @@ Researched 2026-11-26.
 | 03 | [Architecture](03-architecture.md) | Static Netlify site + Netlify Functions, limits, Blobs, env vars, repo layout, `netlify.toml` |
 | 04 | [Agent Console](04-agent-console.md) | Listing `.claude/agents`, chat via a function, propose → Approve → GitHub commit → redeploy, security, long jobs |
 | 05 | [Testing and accessibility](05-testing-and-accessibility.md) | Unit / function / e2e tests, PWA checks, WCAG 2.2 AA checklist |
+| — | [Expert roster](expert-roster.md) | The 12 expert agents, their jobs, shared skills and sign-off rules |
 
 ## Key decisions at a glance
 
@@ -33,7 +34,7 @@ Researched 2026-11-26.
   functions + Blobs progress + polling → long agent jobs.
 - **Default model** `claude-opus-5-5`; agents can name `sonnet` or `haiku` aliases.
 
-## Suggested agent roster (for the next step)
+## Suggested agent roster (superseded by [expert-roster.md](expert-roster.md))
 
 | Agent | Owns |
 |---|---|
