@@ -8,11 +8,15 @@ team's agents and approves code changes they propose.
 
 ## Fixed decisions (`docs/decisions.md`)
 
-- **D1** Static front end + Netlify Functions (Claude and GitHub calls only). No other servers.
+- **D1** Static front end + Netlify Functions (Claude and GitHub calls only). No other servers (amended by D6).
 - **D2** No rip-current estimate; link to the National Weather Service.
 - **D3** Approve in the Agent Console commits straight to `main` (= production deploy).
 - **D4** Netlify Free plan (background functions OK; only 2 rate-limit rules).
 - **D5** GitHub writes use a fine-grained personal access token, this repo only, Contents only.
+- **D6** Supabase Auth with Google is the one allowed outside service, for owner login to the Agent
+  Console only (amends D1). No weather or app data in Supabase. Access is allow-listed by the
+  `OWNER_EMAILS` env var; no Google client secret or Supabase service-role key in the code.
+  Rules: `docs/security/agent-console-auth.md`.
 
 Research and specs: `docs/README.md` (index), `docs/01`–`05`, `docs/expert-roster.md`.
 

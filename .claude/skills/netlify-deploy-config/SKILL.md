@@ -15,7 +15,7 @@ user-invocable: false
 
 ## Environment variables
 `ANTHROPIC_API_KEY`, `GITHUB_TOKEN`, `GITHUB_REPO`, `GITHUB_BRANCH`,
-`CONSOLE_PASSWORD_HASH`, `SESSION_SECRET`, `DAILY_TOKEN_BUDGET`.
+`OWNER_EMAILS` (D6; the owner's address lives only here), `DAILY_TOKEN_BUDGET`.
 - Set them in the UI/CLI — `netlify.toml` variables are not available to functions. Scopes can only
   be restricted on Pro and above, so on Free (D4) they are visible to the build too: no build
   plugins, never print env. Flag secrets as **Contains secret values** where available.

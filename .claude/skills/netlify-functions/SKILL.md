@@ -22,7 +22,7 @@ export const config: Config = { path: "/api/example" };
 - Scheduled: 30 s — not for agent work.
 
 ## Free plan (D4)
-Only **2 code-based rate-limit rules per project**: `/api/login` and `/api/chat`
+Only **2 code-based rate-limit rules per project**: `/api/chat` and one other endpoint (D6 removed `/api/login`)
 (`rateLimit: { windowLimit, windowSize ≤ 180, aggregateBy: ["ip","domain"] }`).
 Rate limits for functions can't go in `netlify.toml`. Other endpoints: session check +
 Blobs counters.

@@ -24,4 +24,4 @@ const j = await jobs.get(`jobs/${id}`, { type: "json" });
 ## Stores
 `jobs` · `proposals` · `audit` (append-only, key by ISO time) · `counters`
 (per-day usage, login failures) · `sessions` only if revocation is needed.
-Never store secrets or the plain password.
+Never store secrets or the owner's email address.

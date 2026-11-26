@@ -1,7 +1,7 @@
 # Expert roster (agents)
 
 **Decision (recorded):** Flood is a PWA on Netlify: a static front end, Netlify
-Functions for the Claude and GitHub calls, and **no other servers**.
+Functions for the Claude and GitHub calls, and **no other servers**, except Supabase Auth with Google for owner login to the Agent Console (D6).
 
 This roster lists the expert agents needed to design, build, test and deploy Flood and
 to run its Agent Console. Each one is defined in `.claude/agents/<name>.md` (built 2026-11-26). Eleven roles
@@ -22,7 +22,7 @@ Models, names and personalities: [agent-brains.md](agent-brains.md).
 | 7 | `ui-designer-apple-liquid-glass` | **Sable** | Sets the visual design in Apple's Liquid Glass style (materials, colour, type, icons, motion) and keeps it legible and accessible. | sonnet |
 | 8 | `ux-designer-apple-hig` | **Wren** | Designs flows, layout and wording to Apple's Human Interface Guidelines so a stressed user sees their risk in seconds. | sonnet |
 | 9 | `agent-console-engineer` | **Ada** | Builds the Agent Console: agent list, streaming chat and long jobs over the Claude API, and propose → Approve → GitHub commit, all in Netlify Functions. | opus |
-| 10 | `security-engineer` | **Quinn** | Threat-models and reviews everything with a secret or a write path: password gate, token scope, path allow-list, CSP, rate limits and spend caps. | opus |
+| 10 | `security-engineer` | **Quinn** | Threat-models and reviews everything with a secret or a write path: Supabase/Google login and owner allow-list, token scope, path allow-list, CSP, rate limits and spend caps. | opus |
 | 11 | `netlify-engineer` | **Rio** | Owns `netlify.toml`, functions config, Blobs, environment variables, headers, deploys, Deploy Previews and rollbacks. | sonnet |
 | 12 | `qa-engineer` | **Hollis** | Owns the test strategy and suites (unit, function, end-to-end, PWA, accessibility) and the release gate. | sonnet |
 
@@ -51,7 +51,7 @@ that owns the skill and reviews others' work in it.
 | **S16 Netlify deploy and config** | `netlify.toml`, headers, env-var scopes and secret flags, deploy contexts, Deploy Previews, auto-deploy on push, rollbacks | netlify-engineer | software-architect, security-engineer |
 | **S17 Claude API** | Messages API, model IDs and aliases, streaming, tool use (strict schemas, input validation), effort, refusals and fallbacks, prompt caching, usage/cost tracking | agent-console-engineer | agent-builder, security-engineer |
 | **S18 GitHub REST (contents)** | Read and update files with a fine-grained token, `sha` conflict checks, serial writes, commit messages | agent-console-engineer | security-engineer, netlify-engineer |
-| **S19 Auth and secrets** | Password hashing, signed `HttpOnly` cookies, CSRF, lockouts, keeping keys in Function env vars only, token rotation | security-engineer | agent-console-engineer, netlify-engineer |
+| **S19 Auth and secrets** | Supabase JWT verification, `OWNER_EMAILS` allow-list, CSRF/Origin checks, keeping keys in Function env vars only, token rotation | security-engineer | agent-console-engineer, netlify-engineer |
 | **S20 Threat modelling and AI-agent safety** | Abuse cases, path allow-lists, prompt-injection defence, human approval gates, spend caps, audit logs | security-engineer | agent-console-engineer, agent-builder, software-architect |
 | **S21 Web security headers** | CSP, `connect-src` allow-list, `frame-ancestors`, referrer and permissions policies | security-engineer | netlify-engineer, pwa-mobile-engineer |
 | **S22 Automated testing** | Vitest unit and function tests with mocked APIs, Playwright end-to-end (offline, mocked network), CI gate | qa-engineer | weather-risk-scientist, agent-console-engineer, security-engineer, open-meteo-integrator |

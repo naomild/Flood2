@@ -8,7 +8,7 @@ if "environment" in cfg.get("build", {}) or "context" in cfg:
 if ".claude/agents/**" not in cfg["functions"]["included_files"]: errors.append("bundle .claude/agents for /api/agents")
 by_path = {h["for"]: h["values"] for h in cfg["headers"]}
 csp = by_path["/*"]["Content-Security-Policy"]
-for needed in ["default-src 'self'", "script-src 'self'", "frame-ancestors 'none'", "https://api.open-meteo.com", "https://marine-api.open-meteo.com", "worker-src 'self'"]:
+for needed in ["default-src 'self'", "script-src 'self'", "frame-ancestors 'none'", "https://api.open-meteo.com", "https://pcmdtscesnxmpuxcizfk.supabase.co", "https://marine-api.open-meteo.com", "worker-src 'self'"]:
     if needed not in csp: errors.append(f"CSP missing {needed}")
 if "unsafe-inline" in csp or "unsafe-eval" in csp: errors.append("CSP must not allow unsafe-inline/eval")
 if by_path.get("/sw.js", {}).get("Cache-Control") != "no-cache": errors.append("sw.js must be no-cache")

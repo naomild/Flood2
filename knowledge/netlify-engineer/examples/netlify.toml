@@ -1,23 +1,49 @@
-# Example 1 — Flood's netlify.toml (validated by 01-check-netlify-toml.py)
-# Docs: Custom headers (headers apply only to files Netlify serves, not to function responses),
-# Functions config. NOTE: env vars declared here are NOT available to functions — set secrets in the UI/CLI.
+# Flood — Netlify configuration (owner: netlify-engineer). Free plan (D4).
+# Sources (all read 2026-11-26 via the team knowledge notes; docs.netlify.com was NOT
+# reachable from the session that wrote this file, so re-check items marked "not verified"):
+#   Custom headers      https://docs.netlify.com/manage/routing/headers/
+#   Functions config    https://docs.netlify.com/build/functions/configuration/
+#   Env vars + funcs    https://docs.netlify.com/build/functions/environment-variables/
+#   Rate limiting       https://docs.netlify.com/manage/security/secure-access-to-sites/rate-limiting/
+#
+# DO NOT declare environment variables here: values in netlify.toml are not available to
+# functions, and this file is committed. Secrets are set in the Netlify UI/CLI
+# (see docs/netlify/env-vars.md).
+#
+# Function rate limits (the 2 Free-plan rules, /api/chat and /api/jobs-style endpoints chosen by
+# security-engineer) live in each function's `config.rateLimit` in code, never in this file.
 
 [build]
   publish = "public"
-  command = "npm test"            # no front-end build reads env vars (Free plan can't scope them, D4)
+  # PROPOSAL (needs security-engineer ruling): run the unit tests only. No bundler, no
+  # third-party build plugins, no script that reads or prints env vars. On Free the build can
+  # see every env var (scopes need Pro), so this command must stay a plain test run.
+  # Switch to "npm test" once package.json defines the test script.
+  command = "node --test"
 
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-  included_files = [".claude/agents/**", ".claude/skills/**"]   # read by /api/agents
+  # Read at runtime by /api/agents (and chat): bundled into the function.
+  included_files = [".claude/agents/**"]
 
+# ---- Security headers: static files only ------------------------------------------------
+# Netlify applies custom headers only to files it serves itself, NOT to function responses
+# (functions must set their own Cache-Control: no-store etc.).
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; connect-src 'self' https://api.open-meteo.com https://marine-api.open-meteo.com; img-src 'self' data:; style-src 'self'; script-src 'self'; manifest-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+    # script-src 'self' only: supabase-js is vendored in public/vendor/ (no CDN, no inline).
+    # connect-src: Supabase Auth (token exchange / refresh), Open-Meteo forecast and marine.
+    # The Google OAuth redirect is a top-level navigation (location change), which is not
+    # governed by connect-src/default-src, so no Google domain is listed (see env-vars doc
+    # note; MDN confirmation not verified from this session).
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://pcmdtscesnxmpuxcizfk.supabase.co https://api.open-meteo.com https://marine-api.open-meteo.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Content-Type-Options = "nosniff"
     Permissions-Policy = "geolocation=(self), camera=(), microphone=()"
+    # One year, no includeSubDomains/preload (site lives on a netlify.app subdomain we don't own).
+    Strict-Transport-Security = "max-age=31536000"
 
 [[headers]]
   for = "/sw.js"

@@ -12,7 +12,7 @@ user-invocable: false
    that relies on it.
 4. If a page can't be reached or doesn't say, write **"not verified"** and say what must be
    checked. Never fill gaps from memory for limits, prices, model IDs or API fields.
-5. Check `docs/decisions.md` first: decisions D1–D5 override anything you read.
+5. Check `docs/decisions.md` first: decisions D1–D6 override anything you read.
 
 Project research lives in `docs/` (index: `docs/README.md`). Update the owning doc when
 you learn something new, and add it to "Not verified" there if you couldn't confirm it.

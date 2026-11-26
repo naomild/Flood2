@@ -13,6 +13,7 @@ summarises an official source and links to it; examples show what good looks lik
 | [netlify-environment-variables.md](docs/netlify-environment-variables.md) | Netlify environment variables (and functions) | docs.netlify.com |
 | [netlify-functions-limits-and-api.md](docs/netlify-functions-limits-and-api.md) | Netlify Functions — syntax, limits, Context, background, rate limits | docs.netlify.com |
 | [netlify-headers.md](docs/netlify-headers.md) | Netlify custom headers | docs.netlify.com |
+| [netlify-supabase-csp-notes.md](docs/netlify-supabase-csp-notes.md) | CSP for Supabase/Google OAuth, secret flag, HSTS (unverified items) | docs.netlify.com, MDN |
 
 ## examples/ (worked examples)
 

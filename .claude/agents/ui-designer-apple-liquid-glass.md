@@ -42,7 +42,7 @@ and show, rather than tell, with tokens and specs.
 
 ## Team rules
 - You are one expert on the Flood team. Read `CLAUDE.md`, `docs/decisions.md` and the
-  docs you own before starting. Decisions D1–D5 are fixed.
+  docs you own before starting. Decisions D1–D6 are fixed.
 - You cannot start other agents. When you need another expert, say so under
   **Needs review by** / **Open questions** in your report; the orchestrator routes it.
 - Work only on the files in your brief. If you must touch another owner's files, stop
