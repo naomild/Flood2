@@ -1,0 +1,67 @@
+/* Flood design tokens — Liquid Glass–style for the web (Sable).
+   Rules from Apple HIG (docs/): glass only on the control layer; colour sparingly on glass;
+   light + dark + increased-contrast variants; solid fallback when transparency is reduced.
+   Every text/background pair below is checked by check-contrast.mjs. */
+:root {
+  color-scheme: light dark;
+  /* Surfaces */
+  --bg: #f2f4f7;               /* content layer background */
+  --surface: #ffffff;          /* cards (content layer: solid, never glass) */
+  --glass-fill: rgb(255 255 255 / 0.62);
+  --glass-fallback: #f7f8fa;   /* opaque stand-in for reduced transparency / no backdrop-filter */
+  --glass-border: rgb(255 255 255 / 0.7);
+  --glass-blur: 20px;
+  --text: #0b1d2a;
+  --text-secondary: #3d4f5c;
+  --accent: #0a5cc2;           /* primary actions only */
+  --on-accent: #ffffff;
+  /* Risk — one meaning each, always paired with a word + icon */
+  --risk-low: #1d6b3a;
+  --risk-moderate: #8a5a00;
+  --risk-high: #b3261e;
+  --risk-very-high: #7a1338;
+  --on-risk: #ffffff;
+  /* Type (iOS Dynamic Type "Large" sizes, 1pt ≈ 1px) */
+  --font: system-ui, -apple-system, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  --size-large-title: 2.125rem; --size-title2: 1.375rem; --size-headline: 1.0625rem;
+  --size-body: 1.0625rem; --size-footnote: 0.8125rem; --size-caption: 0.75rem;
+  --radius-card: 20px; --radius-control: 999px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
+  --motion-fast: 180ms;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1218; --surface: #16212b;
+    --glass-fill: rgb(30 42 54 / 0.58); --glass-fallback: #1c2833; --glass-border: rgb(255 255 255 / 0.14);
+    --text: #f2f5f8; --text-secondary: #b9c6d1;
+    --accent: #6cb4ff; --on-accent: #06192c;
+    --risk-low: #6fd394; --risk-moderate: #f2c14e; --risk-high: #ff8a80; --risk-very-high: #ff9ec4;
+    --on-risk: #0b1218;
+  }
+}
+@media (prefers-contrast: more) {
+  :root { --text-secondary: #1f2f3a; --glass-fill: rgb(255 255 255 / 0.9); --glass-border: #0b1d2a; }
+}
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root { --text-secondary: #e3eaf0; --glass-fill: rgb(22 33 43 / 0.94); --glass-border: #f2f5f8; }
+}
+
+/* Control layer only (top bar, tab bar, sheets, Approve bar) */
+.glass {
+  background: var(--glass-fallback);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-control);
+}
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .glass {
+    background: var(--glass-fill);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass { background: var(--glass-fallback); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --motion-fast: 0ms; }
+}

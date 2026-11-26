@@ -1,0 +1,49 @@
+<!doctype html>
+<!-- Risk badge + day card (content layer = solid) under a glass top bar (control layer).
+     Open in a browser to view; check-contrast.mjs loads it to verify the fallbacks. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Risk badge — Flood</title>
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    body { margin: 0; font: var(--size-body)/1.35 var(--font); background: var(--bg); color: var(--text); }
+    .topbar { position: sticky; top: 8px; margin: 8px; padding: 10px 16px; display: flex; gap: 8px; align-items: center; }
+    .topbar button { min-block-size: 44px; min-inline-size: 44px; border: 0; border-radius: 999px;
+      background: var(--accent); color: var(--on-accent); font: 600 var(--size-headline) var(--font); padding: 0 16px; }
+    .card { background: var(--surface); border-radius: var(--radius-card); margin: 16px; padding: 16px; }
+    .card h2 { font: 600 var(--size-headline) var(--font); margin: 0 0 8px; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px;
+      font: 600 var(--size-footnote) var(--font); color: var(--on-risk); }
+    .badge svg { width: 1em; height: 1em; }   /* scales with text size */
+    .badge[data-level="low"] { background: var(--risk-low); }
+    .badge[data-level="moderate"] { background: var(--risk-moderate); }
+    .badge[data-level="high"] { background: var(--risk-high); }
+    .badge[data-level="very-high"] { background: var(--risk-very-high); }
+    .reason { color: var(--text-secondary); margin: 8px 0 0; }
+  </style>
+</head>
+<body>
+  <header class="topbar glass"><strong>Miami</strong><span class="reason">Updated 3:10 PM</span>
+    <button type="button">Change city</button></header>
+  <main>
+    <section class="card" aria-labelledby="flood-h">
+      <h2 id="flood-h">Flood outlook</h2>
+      <span class="badge" data-level="very-high">
+        <svg aria-hidden="true" viewBox="0 0 16 16"><path fill="currentColor" d="M8 1 15 14H1z"/></svg>
+        Very high
+      </span>
+      <p class="reason">17.2 in of rain expected · up to 3.8 in in one hour</p>
+    </section>
+    <section class="card" aria-labelledby="power-h">
+      <h2 id="power-h">Power outage chance</h2>
+      <span class="badge" data-level="low">
+        <svg aria-hidden="true" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="currentColor"/></svg>
+        Low
+      </span>
+      <p class="reason">Wind gusts up to 30 mph</p>
+    </section>
+  </main>
+</body>
+</html>

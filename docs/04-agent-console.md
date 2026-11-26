@@ -37,7 +37,7 @@ Calm, exacting, quietly opinionated...
 The `agents` function reads them (bundled via `included_files = [".claude/agents/**"]`),
 parses the front matter and returns `{ id, name, description, model, skills, personality }`.
 `personality` is the `## Persona` section when the agent has one (Sable, Wren), otherwise
-the first paragraph of the body. The whole body becomes the system prompt in chat; the
+the body's first "You are …" paragraph (the "Before you answer" section is not a personality). The whole body becomes the system prompt in chat; the
 agent's `skills` can be appended from `.claude/skills/<name>/SKILL.md` (bundle that folder
 with `included_files` too). The real definitions are in `.claude/agents/` (12 agents).
 
@@ -172,7 +172,7 @@ code itself.
 | **Read allow-list** | Same as write plus read-only `README.md`; never `netlify/lib/auth.ts`-style secrets (there are none in the repo, but keep reads scoped anyway) |
 | **Content checks** | Text only (UTF-8), ≤ 200 KB per file, ≤ 5 files per proposal; reject content containing likely secrets (`sk-ant-`, `ghp_`, `github_pat_` patterns) |
 | **Human in the loop** | Agents can only *propose*. The diff is shown in full; Approve is a separate request requiring the session |
-| **No secrets in the browser** | Keys only in function env vars (secret-flagged, Functions scope); responses never echo env; CSP `connect-src 'self'` + Open-Meteo only |
+| **No secrets in the browser** | Keys only in Netlify env vars read by functions via `process.env` (secret-flagged where available; Free plan can't restrict scopes, so the build must never print or embed them); responses never echo env; CSP `connect-src 'self'` + Open-Meteo only |
 | **Rate limits** | The Netlify Free plan allows **2 code-based rate-limit rules per project** (D4). Use them on `/api/login` (5 per 60 s per IP) and `/api/chat` (10 per 60 s per IP). Protect `/api/jobs`, approve and reject with the session check plus per-day counters in Blobs (e.g. 20 jobs/day, 50 approvals/day) |
 | **Spend guard** | Per-day token counter in Blobs (sum `usage.input_tokens + output_tokens`); refuse when over `DAILY_TOKEN_BUDGET`. Also set a monthly spend limit in the Claude Console |
 | **Prompt injection** | File contents and web data are untrusted. The system prompt says so; tool outputs are wrapped as data; the allow-list and human approval are the real defence, not the prompt |

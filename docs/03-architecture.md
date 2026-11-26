@@ -19,9 +19,12 @@ configuration, background functions, Blobs, environment variables, rate limiting
 
 Gotcha seen in the community forum: a secret-flagged variable not reaching the functions
 runtime in one deploy (<https://answers.netlify.com/t/env-vars-flagged-contains-secret-values-not-injected-into-functions-runtime-process-env-non-secret-vars-work-fine-same-deploy/167922>).
-Make sure each variable's **scope includes Functions**, read it with `Netlify.env.get("NAME")`
-(or `process.env.NAME`), and have a `/api/health` function that reports *which* required
-variables are present (names only, never values).
+Read variables with `process.env.NAME` (the form Netlify's *Environment variables and serverless
+functions* page shows), set them in the UI or CLI (variables declared in `netlify.toml` are **not**
+available to functions), and have a `/api/health` function that reports *which* required variables
+are present (names only, never values). Scopes can only be restricted "on the Pro plan and above"
+(<https://docs.netlify.com/build/functions/environment-variables/>); on Free (D4) every variable is
+visible to builds as well as functions.
 
 ## 2. Shape of the system
 
@@ -104,7 +107,7 @@ Everything with a secret lives in functions. See `04-agent-console.md`.
     Cache-Control = "no-cache"
 ```
 
-## 4. Environment variables (all scoped to Functions, all secret-flagged)
+## 4. Environment variables (set in the UI/CLI, secret-flagged where available)
 
 | Name | Purpose |
 |---|---|
@@ -116,8 +119,9 @@ Everything with a secret lives in functions. See `04-agent-console.md`.
 | `SESSION_SECRET` | 32+ random bytes for signing session cookies |
 | `DAILY_TOKEN_BUDGET` | optional spend guard, e.g. `2000000` |
 
-Nothing here is ever sent to the browser. There is no client-side build step that reads
-env vars, so nothing can leak into bundles by accident.
+Nothing here is ever sent to the browser. On the Free plan these variables are also visible to the
+build (scopes need Pro), so the build must run no third-party build plugins, never print env vars,
+and generate nothing in `public/` from them. Values are limited to 5,000 characters.
 
 ## 5. Technology choices
 

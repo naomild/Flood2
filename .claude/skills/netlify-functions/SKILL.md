@@ -28,7 +28,8 @@ Rate limits for functions can't go in `netlify.toml`. Other endpoints: session c
 Blobs counters.
 
 ## Rules
-- Read env with `Netlify.env.get("NAME")`; never return or log secrets.
+- Read env with `process.env.NAME` (as Netlify's functions env-var docs show); vars from
+  `netlify.toml` are not available to functions. Never return or log secrets.
 - Validate method, content type and body size first; return JSON errors with status codes.
 - Bundle `.claude/agents/**` via `included_files` when a function reads them.
 - Each function is a thin handler; logic lives in `netlify/lib/` and is unit-tested.

@@ -26,8 +26,8 @@ Researched 2026-11-26.
 - **Scores are heuristics**, clearly labelled as estimates with their reasons, alongside
   links to the NWS and the power company's outage map. Thresholds live in one tunable
   object.
-- **Secrets live only in Netlify Functions** (`ANTHROPIC_API_KEY`, `GITHUB_TOKEN`, …),
-  flagged as secret, scoped to Functions.
+- **Secrets are read only by Netlify Functions** (`ANTHROPIC_API_KEY`, `GITHUB_TOKEN`, …) via
+  `process.env`; on the Free plan they can't be scope-restricted, so the build never touches them.
 - **Agents can only propose**; a human clicks Approve, which commits one file through the
   GitHub contents API using a fine-grained token limited to this repository. A path
   allow-list blocks edits to functions, config, workflows and package files.
@@ -41,7 +41,8 @@ See [expert-roster.md](expert-roster.md): 12 expert agents, their jobs, shared s
 
 ## Not verified in this pass (read the docs before building)
 
-- NWS API (`api.weather.gov`) alerts, NOAA CO-OPS tide predictions, and the exact NWS
-  surf-zone / rip-current page URLs to link to (D2)
+- NWS API (`api.weather.gov`) alerts, NOAA CO-OPS tide predictions, and the NWS Key West
+  surf-zone page (the NWS Miami links for D2 are verified)
+- Whether Netlify's "Contains secret values" flag is available on the Free plan
 - GitHub Git Data API for atomic multi-file commits
 - Open-Meteo licence/attribution wording (CC BY 4.0 expected)

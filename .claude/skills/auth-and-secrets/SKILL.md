@@ -14,7 +14,9 @@ user-invocable: false
 - Every `/api/*` except `login` and `health` verifies the session first.
 - CSRF: `SameSite=Strict`, require `X-Requested-With: console`, check `Origin` matches
   the site on every POST.
-- Secrets live only in Netlify env vars (Functions scope, secret-flagged). Never in
+- Secrets live only in Netlify env vars set in the UI/CLI (not `netlify.toml`), read by functions
+  with `process.env`; secret-flagged where available. Free plan: scopes can't be restricted, so the
+  build must never print or embed them. Never in
   `public/`, responses, logs, error messages, Blobs or commits. Grep before release for
   `sk-ant-`, `ghp_`, `github_pat_`.
 - Rotation: GitHub token has an expiry; rotate `SESSION_SECRET` to log everyone out.

@@ -24,6 +24,13 @@ Docs: https://code.claude.com/docs/en/sub-agents · https://code.claude.com/docs
 - Keep each under 500 lines, and short: preloaded skills cost context in every agent.
   Link to `docs/` for detail. Don't name a skill after a bundled one (e.g. `claude-api`).
 
+## Knowledge folders
+Every agent has `knowledge/<name>/docs/` (notes from official docs, each with a source link and read
+date) and `knowledge/<name>/examples/` (2–3 small, correct worked examples; code must run in
+`knowledge/run-all.sh`). Every agent file starts its body with a **"Before you answer"** section:
+read every file in its knowledge folder first and prefer it over memory. A new agent isn't done
+until its knowledge folder exists.
+
 ## Keep the roster in sync
 `docs/expert-roster.md` is the source of truth. Any added/removed agent or skill, or a
 changed agent→skill mapping, updates the roster tables and `CLAUDE.md` in the same change.

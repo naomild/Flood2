@@ -1,0 +1,15 @@
+{
+  "name": "flood-knowledge-examples",
+  "private": true,
+  "type": "module",
+  "description": "Runs every code example in knowledge/*/examples. Not part of the app build.",
+  "scripts": {
+    "verify": "bash run-all.sh"
+  },
+  "devDependencies": {
+    "@anthropic-ai/sdk": "1.14.0",
+    "@axe-core/playwright": "4.14.1",
+    "@playwright/test": "1.63.0",
+    "vitest": "5.1.2"
+  }
+}

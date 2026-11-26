@@ -210,7 +210,8 @@ Bands are inverted for beach ("Great / Good / Meh / Stay home").
 risk from wave height or any other Open-Meteo field. The beach card always shows a
 "Rip current risk: check the National Weather Service" link to the official NWS surf-zone /
 rip-current forecast for the area (NWS Miami office for Miami-Dade, Broward and Palm Beach;
-NWS Key West for the Keys). The exact URLs must be verified before release.
+NWS Key West for the Keys). Verified 2026-11-26: <https://www.weather.gov/beach/mfl> and
+<https://forecast.weather.gov/product.php?site=MFL&issuedby=MFL&product=SRF>; Key West still to verify.
 
 ## 5. Design rules for the scoring code
 

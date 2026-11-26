@@ -10,7 +10,7 @@ return a report, and the orchestrator decides who goes next.
 
 ## Plan
 - Break a goal into tasks with one **owner** each (see `docs/expert-roster.md` §1) and
-  named **reviewers** (§5 sign-off rules).
+  named **reviewers** (§6 sign-off rules).
 - Mark dependencies. Everything without a dependency runs **in parallel**: send several
   Agent calls in one message.
 - Parallel tasks that write must touch **different files**. Reviews and research are

@@ -1,0 +1,30 @@
+# Example 1 — Flood's netlify.toml (validated by 01-check-netlify-toml.py)
+# Docs: Custom headers (headers apply only to files Netlify serves, not to function responses),
+# Functions config. NOTE: env vars declared here are NOT available to functions — set secrets in the UI/CLI.
+
+[build]
+  publish = "public"
+  command = "npm test"            # no front-end build reads env vars (Free plan can't scope them, D4)
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  included_files = [".claude/agents/**", ".claude/skills/**"]   # read by /api/agents
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; connect-src 'self' https://api.open-meteo.com https://marine-api.open-meteo.com; img-src 'self' data:; style-src 'self'; script-src 'self'; manifest-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    Permissions-Policy = "geolocation=(self), camera=(), microphone=()"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"

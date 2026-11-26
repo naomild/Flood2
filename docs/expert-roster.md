@@ -140,7 +140,14 @@ homework on the most safety-relevant part of the app.
 | Data / analytics | Not in scope; no user data is collected |
 | Translator (Spanish, Haitian Creole) | Later, if localisation is approved |
 
-## 4. Who owns which doc
+## 4. Knowledge folders
+
+Each agent has `knowledge/<agent-name>/` with `docs/` (reference notes from official documentation,
+each with its source link) and `examples/` (2–3 worked examples; code examples run via
+`knowledge/run-all.sh`). Index: `knowledge/README.md`. The agent-builder maintains the structure;
+each expert adds sourced notes to its own folder.
+
+## 5. Who owns which doc
 
 | Doc | Owner | Reviewers |
 |---|---|---|
@@ -151,7 +158,7 @@ homework on the most safety-relevant part of the app.
 | `05-testing-and-accessibility.md` | qa-engineer | ux-designer-apple-hig |
 | `expert-roster.md` (this file) | agent-builder | orchestrator |
 
-## 5. Hand-off rules
+## 6. Hand-off rules
 
 - The orchestrator assigns every task to one **owner** and names its reviewers.
 - Any change touching secrets, auth, the path allow-list, headers or GitHub writes needs

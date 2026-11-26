@@ -36,7 +36,11 @@ Twelve expert subagents live in `.claude/agents/`. Roles, skills and sign-off ru
 | `netlify-engineer` | `netlify.toml`, functions config, Blobs, env vars, deploys |
 | `qa-engineer` | Tests, accessibility and PWA audits, release go/no-go |
 
-Each agent preloads its skills from `.claude/skills/` through the `skills:` field. The 23
+Each agent preloads its skills from `.claude/skills/` through the `skills:` field, and has its own
+knowledge folder, `knowledge/<agent-name>/` (`docs/`: notes from official documentation with
+source links; `examples/`: worked examples, all runnable code verified with
+`cd knowledge && npm install && npm run verify`). Every agent file begins with **"Before you
+answer"**: read every file in your knowledge folder first and prefer it over memory. The 23
 skills are reference knowledge (`user-invocable: false`), so they don't appear in the
 `/` menu.
 
