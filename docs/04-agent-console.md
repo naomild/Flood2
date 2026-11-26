@@ -1,6 +1,6 @@
 # 04 · Agent Console (in the deployed app)
 
-A password-protected page at `/agents` that:
+An owner-only page at `/agents`, behind **Login with Google via Supabase Auth** (D6), that:
 
 1. lists every agent defined in `.claude/agents/*.md` with its **name, model and
    personality**;
@@ -12,6 +12,12 @@ A password-protected page at `/agents` that:
 Researched 2026-11-26 from the Claude API docs (Messages API, models, tool use,
 streaming — via the bundled Claude API reference), Netlify docs (see `03-architecture.md`)
 and the GitHub REST docs for repository contents and fine-grained tokens.
+
+> **D6 (2026-11-26):** the password gate planned below is replaced by Supabase Auth with the
+> Google provider. Only addresses in the `OWNER_EMAILS` Function env var may use the console.
+> The sections that still describe `/api/login`, `CONSOLE_PASSWORD_HASH` and the session
+> cookie are superseded and are being rewritten by agent-console-engineer and
+> security-engineer; until then, `decisions.md` D6 is the source of truth.
 
 ## 1. Agent definitions
 
@@ -104,7 +110,9 @@ Agents never receive a tool that commits. Committing is a separate, human-only e
 | `/api/proposals/:id/reject` | POST | sync | Mark rejected |
 | `/api/health` | GET | sync | Names of configured env vars, no values |
 
-All except `/api/login` and `/api/health` require a valid session.
+All except `/api/health` require a valid Supabase access token (`Authorization: Bearer`) for an
+address in `OWNER_EMAILS` (D6). `/api/login` and `/api/logout` are superseded: sign-in and
+sign-out happen in the browser with `supabase-js`.
 
 ## 4. Approve → commit → redeploy (GitHub REST)
 
@@ -165,7 +173,7 @@ code itself.
 
 | Control | Implementation |
 |---|---|
-| **Password gate** | One console password, stored only as a scrypt/argon2 hash in `CONSOLE_PASSWORD_HASH`. `crypto.timingSafeEqual` compare. On success set cookie `session=<payload>.<HMAC-SHA256(SESSION_SECRET)>` with `HttpOnly; Secure; SameSite=Strict; Path=/api; Max-Age=43200`. Lock out after 5 failures per IP for 15 min (counter in Blobs) in addition to Netlify rate limiting |
+| **Password gate** *(superseded by D6: Supabase Auth, Google, `OWNER_EMAILS` allow-list)* | One console password, stored only as a scrypt/argon2 hash in `CONSOLE_PASSWORD_HASH`. `crypto.timingSafeEqual` compare. On success set cookie `session=<payload>.<HMAC-SHA256(SESSION_SECRET)>` with `HttpOnly; Secure; SameSite=Strict; Path=/api; Max-Age=43200`. Lock out after 5 failures per IP for 15 min (counter in Blobs) in addition to Netlify rate limiting |
 | **CSRF** | `SameSite=Strict` + require header `X-Requested-With: console` and check `Origin` equals the site URL on every POST |
 | **Least-privilege GitHub token** | Fine-grained PAT: *Only select repositories* → this one repo; permissions **Contents: Read and write** (Metadata: read is automatic); **no** Workflows, Administration, Secrets, Actions. Set an expiration (e.g. 90 days) and a calendar reminder. Docs: <https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens> |
 | **Path allow-list** (writes) | Allow: `public/**` (except `public/_headers`, `public/_redirects`), `src/**`, `tests/**`, `docs/**`, `.claude/agents/**` (optional). Deny always: `netlify/**`, `netlify.toml`, `package.json`, `package-lock.json`, `.github/**`, `.env*`, `_headers`, `_redirects`, any path with `..`, leading `/`, backslashes, or control chars. Normalize with `path.posix.normalize` and compare against the normalized form. Unit-test this file heavily |
@@ -220,11 +228,12 @@ later**. A retried agent run would spend tokens twice, so `/api/job-run` must:
 ## 7. Decided and still open
 
 Decided (see `decisions.md`): commit straight to `main` (D3); Netlify Free plan (D4);
-fine-grained personal access token (D5).
+fine-grained personal access token (D5); Supabase Auth (Google) for owner login (D6).
 
 Still open:
 
-- Single password vs Netlify Identity / OAuth (single password is simplest for one user).
+- ~~Single password vs Netlify Identity / OAuth~~ — decided: Supabase Auth with Google, owner
+  only (D6).
 - Whether `.claude/agents/**` should itself be editable by agents through the console
   (it changes their own prompts — default **no**; in the repo only `agent-builder` edits
   them).

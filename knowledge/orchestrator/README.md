@@ -10,6 +10,7 @@ summarises an official source and links to it; examples show what good looks lik
 | File | Topic | Sources |
 |---|---|---|
 | [claude-code-subagents-orchestration.md](docs/claude-code-subagents-orchestration.md) | Claude Code subagents — what the orchestrator relies on | code.claude.com |
+| [supabase-auth-google-not-verified.md](docs/supabase-auth-google-not-verified.md) | Supabase Auth (Google) for D6 — pages still to verify | supabase.com (not reached) |
 
 ## examples/ (worked examples)
 
