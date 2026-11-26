@@ -17,6 +17,7 @@ Researched 2026-11-26.
 | 04 | [Agent Console](04-agent-console.md) | Listing `.claude/agents`, chat via a function, propose → Approve → GitHub commit → redeploy, security, long jobs |
 | 05 | [Testing and accessibility](05-testing-and-accessibility.md) | Unit / function / e2e tests, PWA checks, WCAG 2.2 AA checklist |
 | — | [Decisions](decisions.md) | The owner's fixed decisions (D1–D5) and their consequences |
+| — | [Agent brains](agent-brains.md) | Each agent's model, first name, personality and knowledge folder |
 | — | [Expert roster](expert-roster.md) | The 12 expert agents, their jobs, shared skills and sign-off rules |
 
 ## Key decisions at a glance

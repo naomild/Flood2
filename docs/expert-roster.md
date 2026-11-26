@@ -9,20 +9,22 @@ were required. One more was added because the app really needs it (see §3).
 
 ## 1. The team
 
-| # | Agent (`name`) | Persona | One-line job | Suggested model |
+Models, names and personalities: [agent-brains.md](agent-brains.md).
+
+| # | Agent (`name`) | Name | One-line job | Model |
 |---|---|---|---|---|
-| 1 | `orchestrator` | — | Runs the team. Turns goals into tasks, assigns them to the right expert, orders the work, merges results and keeps the plan and docs current. | opus |
-| 2 | `agent-builder` (meta agent) | — | Writes, reviews and improves the other agents' definitions (prompts, tools, models). Retires or splits agents that underperform. | opus |
-| 3 | `software-architect` | — | Owns the overall design within the "static + Functions only" decision: module boundaries, data flow, folder layout and architecture decision records. | opus |
-| 4 | `open-meteo-integrator` | — | Builds and maintains every Open-Meteo forecast and marine request, the city list, unit handling and recorded test fixtures. | sonnet |
-| 5 | `weather-risk-scientist` *(added)* | — | Owns the flood, power-outage and beach-day scoring rules and thresholds, their sources and the "why" text shown to users. | opus |
-| 6 | `pwa-mobile-engineer` | — | Builds the front end as an installable, offline-first PWA (manifest, service worker, install flow) that works on iPhone and Android. | sonnet |
+| 1 | `orchestrator` | **Marlowe** | Runs the team. Turns goals into tasks, assigns them to the right expert, orders the work, merges results and keeps the plan and docs current. | opus |
+| 2 | `agent-builder` (meta agent) | **Juno** | Writes, reviews and improves the other agents' definitions (prompts, tools, models). Retires or splits agents that underperform. | sonnet |
+| 3 | `software-architect` | **Theo** | Owns the overall design within the "static + Functions only" decision: module boundaries, data flow, folder layout and architecture decision records. | opus |
+| 4 | `open-meteo-integrator` | **Skye** | Builds and maintains every Open-Meteo forecast and marine request, the city list, unit handling and recorded test fixtures. | haiku |
+| 5 | `weather-risk-scientist` *(added)* | **Marisol** | Owns the flood, power-outage and beach-day scoring rules and thresholds, their sources and the "why" text shown to users. | sonnet |
+| 6 | `pwa-mobile-engineer` | **Kai** | Builds the front end as an installable, offline-first PWA (manifest, service worker, install flow) that works on iPhone and Android. | sonnet |
 | 7 | `ui-designer-apple-liquid-glass` | **Sable** | Sets the visual design in Apple's Liquid Glass style (materials, colour, type, icons, motion) and keeps it legible and accessible. | sonnet |
 | 8 | `ux-designer-apple-hig` | **Wren** | Designs flows, layout and wording to Apple's Human Interface Guidelines so a stressed user sees their risk in seconds. | sonnet |
-| 9 | `agent-console-engineer` | — | Builds the Agent Console: agent list, streaming chat and long jobs over the Claude API, and propose → Approve → GitHub commit, all in Netlify Functions. | opus |
-| 10 | `security-engineer` | — | Threat-models and reviews everything with a secret or a write path: password gate, token scope, path allow-list, CSP, rate limits and spend caps. | opus |
-| 11 | `netlify-engineer` | — | Owns `netlify.toml`, functions config, Blobs, environment variables, headers, deploys, Deploy Previews and rollbacks. | sonnet |
-| 12 | `qa-engineer` | — | Owns the test strategy and suites (unit, function, end-to-end, PWA, accessibility) and the release gate. | sonnet |
+| 9 | `agent-console-engineer` | **Ada** | Builds the Agent Console: agent list, streaming chat and long jobs over the Claude API, and propose → Approve → GitHub commit, all in Netlify Functions. | opus |
+| 10 | `security-engineer` | **Quinn** | Threat-models and reviews everything with a secret or a write path: password gate, token scope, path allow-list, CSP, rate limits and spend caps. | opus |
+| 11 | `netlify-engineer` | **Rio** | Owns `netlify.toml`, functions config, Blobs, environment variables, headers, deploys, Deploy Previews and rollbacks. | sonnet |
+| 12 | `qa-engineer` | **Hollis** | Owns the test strategy and suites (unit, function, end-to-end, PWA, accessibility) and the release gate. | sonnet |
 
 ## 2. Skills
 

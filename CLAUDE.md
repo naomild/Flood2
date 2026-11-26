@@ -19,22 +19,22 @@ Research and specs: `docs/README.md` (index), `docs/01`–`05`, `docs/expert-ros
 ## The team
 
 Twelve expert subagents live in `.claude/agents/`. Roles, skills and sign-off rules:
-`docs/expert-roster.md`.
+`docs/expert-roster.md`; models, names and personalities: `docs/agent-brains.md`.
 
-| Agent | Role |
-|---|---|
-| `orchestrator` | Runs the team: plans, runs experts in parallel, routes every hand-off, commits and pushes |
-| `agent-builder` | Meta agent: builds and improves the agents and skills |
-| `software-architect` | Overall design inside D1, architecture decisions |
-| `open-meteo-integrator` | Open-Meteo requests, city list, parsing, fixtures |
-| `weather-risk-scientist` | Flood / outage / beach scoring and risk wording |
-| `pwa-mobile-engineer` | Front end, manifest, service worker, offline, install |
-| `ui-designer-apple-liquid-glass` (**Sable**) | Visual design in Apple's Liquid Glass style |
-| `ux-designer-apple-hig` (**Wren**) | Flows, layout and copy to Apple's HIG |
-| `agent-console-engineer` | Agent Console: Claude API chat/jobs, propose → Approve → GitHub commit |
-| `security-engineer` | Auth, secrets, token scope, allow-list, CSP, rate limits — required sign-off |
-| `netlify-engineer` | `netlify.toml`, functions config, Blobs, env vars, deploys |
-| `qa-engineer` | Tests, accessibility and PWA audits, release go/no-go |
+| Agent | Name · model | Role |
+|---|---|---|
+| `orchestrator` | Marlowe · opus | Runs the team: plans, runs experts in parallel, routes every hand-off, commits and pushes |
+| `agent-builder` | Juno · sonnet | Meta agent: builds and improves the agents and skills |
+| `software-architect` | Theo · opus | Overall design inside D1, architecture decisions |
+| `open-meteo-integrator` | Skye · haiku | Open-Meteo requests, city list, parsing, fixtures |
+| `weather-risk-scientist` | Marisol · sonnet | Flood / outage / beach scoring and risk wording |
+| `pwa-mobile-engineer` | Kai · sonnet | Front end, manifest, service worker, offline, install |
+| `ui-designer-apple-liquid-glass` | Sable · sonnet | Visual design in Apple's Liquid Glass style |
+| `ux-designer-apple-hig` | Wren · sonnet | Flows, layout and copy to Apple's HIG |
+| `agent-console-engineer` | Ada · opus | Agent Console: Claude API chat/jobs, propose → Approve → GitHub commit |
+| `security-engineer` | Quinn · opus | Auth, secrets, token scope, allow-list, CSP, rate limits — required sign-off |
+| `netlify-engineer` | Rio · sonnet | `netlify.toml`, functions config, Blobs, env vars, deploys |
+| `qa-engineer` | Hollis · sonnet | Tests, accessibility and PWA audits, release go/no-go |
 
 Each agent preloads its skills from `.claude/skills/` through the `skills:` field, and has its own
 knowledge folder, `knowledge/<agent-name>/` (`docs/`: notes from official documentation with
