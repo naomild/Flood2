@@ -34,16 +34,9 @@ Researched 2026-11-26.
   functions + Blobs progress + polling → long agent jobs.
 - **Default model** `claude-opus-5-5`; agents can name `sonnet` or `haiku` aliases.
 
-## Suggested agent roster (superseded by [expert-roster.md](expert-roster.md))
+## Agent team
 
-| Agent | Owns |
-|---|---|
-| `product-lead` | Scope, user stories, copy, disclaimers (docs 01) |
-| `weather-scientist` | Open-Meteo requests, scoring thresholds, fixtures (doc 01) |
-| `pwa-frontend` | HTML/CSS/JS, manifest, service worker, install UX (doc 02) |
-| `netlify-backend` | Functions, Blobs, env vars, `netlify.toml` (doc 03) |
-| `security-reviewer` | Auth, allow-list, token scopes, CSP, rate limits (doc 04) |
-| `qa-accessibility` | Vitest, Playwright, axe, device checklist (doc 05) |
+See [expert-roster.md](expert-roster.md): 12 expert agents, their jobs, shared skills and sign-off rules.
 
 ## Not verified in this pass (read the docs before building)
 
