@@ -199,12 +199,18 @@ Start at 100 and subtract:
 | Rain | `precipitation_probability_max` | −0.6 × p |
 | Storms | `weather_code` 95–99 during 9am–6pm | −40 |
 | Wind | `wind_speed_10m_max` (mph) | >15 → −10; >20 → −25 |
-| Waves | daily max `wave_height` (ft) | >3 → −10; >5 → −30 (rip-current risk) |
+| Waves | daily max `wave_height` (ft) | >3 → −10; >5 → −30 (comfort and surf only, **not** a rip-current estimate) |
 | Water temp | `sea_surface_temperature` (°F) | <72 → −15 |
 | Air temp | `temperature_2m_max` (°F) | <70 → −20; >95 → −10 |
 | UV | `uv_index_max` | ≥ 8 → no penalty, but show a sunscreen tip (UV 8–10 is "very high", 11+ "extreme" per the WHO/EPA UV scale) |
 
 Bands are inverted for beach ("Great / Good / Meh / Stay home").
+
+**Rip currents (decision D2, see `decisions.md`):** the app does **not** estimate rip-current
+risk from wave height or any other Open-Meteo field. The beach card always shows a
+"Rip current risk: check the National Weather Service" link to the official NWS surf-zone /
+rip-current forecast for the area (NWS Miami office for Miami-Dade, Broward and Palm Beach;
+NWS Key West for the Keys). The exact URLs must be verified before release.
 
 ## 5. Design rules for the scoring code
 

@@ -19,17 +19,27 @@ Claude Code sub-agents are Markdown files with YAML front matter:
 
 ```markdown
 ---
-name: flood-scientist
-description: Tunes flood and outage scoring thresholds using NWS guidance.
-model: opus            # alias: opus | sonnet | haiku | inherit, or a full model ID
-tools: Read, Grep, Edit
+name: ui-designer-apple-liquid-glass
+description: "Sable, the Apple-style UI designer (Liquid Glass). Use for visual design..."
+tools: Read, Grep, Glob, Edit, Write, WebFetch, WebSearch
+model: sonnet          # alias: opus | sonnet | haiku | inherit, or a full model ID
+skills:
+  - liquid-glass-visual-design
+  - accessibility-wcag
+color: pink
 ---
-You are a calm, precise hydrometeorologist from Miami... (personality / system prompt)
+You are **Sable**, the Flood team's visual designer...
+
+## Persona
+Calm, exacting, quietly opinionated...
 ```
 
 The `agents` function reads them (bundled via `included_files = [".claude/agents/**"]`),
-parses the front matter and returns `{ id, name, description, model, personality }` where
-`personality` is the first paragraph of the body (the whole body becomes the system prompt).
+parses the front matter and returns `{ id, name, description, model, skills, personality }`.
+`personality` is the `## Persona` section when the agent has one (Sable, Wren), otherwise
+the first paragraph of the body. The whole body becomes the system prompt in chat; the
+agent's `skills` can be appended from `.claude/skills/<name>/SKILL.md` (bundle that folder
+with `included_files` too). The real definitions are in `.claude/agents/` (12 agents).
 
 Model alias → Claude API model ID (current models as of 2026-11; check
 `GET /v1/models` at startup rather than hard-coding forever):
@@ -130,9 +140,16 @@ Multi-file proposals: the contents endpoint makes **one commit per file**. For a
 multi-file changes use the Git Data API (create blobs → tree → commit → update ref) — read
 those docs before building it. Start with single-file proposals.
 
-Safer variant to consider: commit to a `agent/<id>` branch and let Netlify build a
-**Deploy Preview**, then merge on a second Approve. Costs one more click; gives a live
-preview before production.
+**Decided (D3):** Approve commits **straight to `main`**, so every approval is a
+production deploy. Because of that:
+
+- the diff shown before Approve must be the complete, final file content;
+- after each commit the UI shows the commit link and "deploying…", and the audit log
+  keeps the commit SHA;
+- to undo, either re-publish the previous deploy from Netlify's deploy list, or approve a
+  revert proposal (the previous file content, re-checked against the current `sha`).
+
+The branch + Deploy Preview flow was considered and not chosen.
 
 ## 5. Security
 
@@ -156,7 +173,7 @@ code itself.
 | **Content checks** | Text only (UTF-8), ≤ 200 KB per file, ≤ 5 files per proposal; reject content containing likely secrets (`sk-ant-`, `ghp_`, `github_pat_` patterns) |
 | **Human in the loop** | Agents can only *propose*. The diff is shown in full; Approve is a separate request requiring the session |
 | **No secrets in the browser** | Keys only in function env vars (secret-flagged, Functions scope); responses never echo env; CSP `connect-src 'self'` + Open-Meteo only |
-| **Rate limits** | Netlify `config.rateLimit` on each function: `/api/login` 5/min per IP; `/api/chat` 10/min; `/api/jobs` 3/min; approve 10/min |
+| **Rate limits** | The Netlify Free plan allows **2 code-based rate-limit rules per project** (D4). Use them on `/api/login` (5 per 60 s per IP) and `/api/chat` (10 per 60 s per IP). Protect `/api/jobs`, approve and reject with the session check plus per-day counters in Blobs (e.g. 20 jobs/day, 50 approvals/day) |
 | **Spend guard** | Per-day token counter in Blobs (sum `usage.input_tokens + output_tokens`); refuse when over `DAILY_TOKEN_BUDGET`. Also set a monthly spend limit in the Claude Console |
 | **Prompt injection** | File contents and web data are untrusted. The system prompt says so; tool outputs are wrapped as data; the allow-list and human approval are the real defence, not the prompt |
 | **Audit log** | Append every login, proposal, approval and commit SHA to a Blobs `audit` store |
@@ -188,12 +205,26 @@ Design:
 3. Optionally use the API's **task budget** (beta) so the model paces itself, and
    **compaction** (beta) for very long conversations — read the docs first.
 
-Confirm that background functions are included in the Netlify plan in use before relying
-on them (not verified in this research pass).
+**Free plan (D4):** background functions are available on credit-based plans, including
+Free (Netlify docs, *Background Functions overview*). The same page says that if the
+invocation returns an error, Netlify **retries after one minute, and again two minutes
+later**. A retried agent run would spend tokens twice, so `/api/job-run` must:
 
-## 7. Open questions for the build team
+- catch every error, write `status:"failed"` with the reason to Blobs, and finish without
+  throwing (no retry);
+- check the job's status at start and exit at once unless it is `queued` or
+  `resuming` (a retry of a job that already ran does nothing);
+- claim the job with a conditional Blobs write (`onlyIfMatch` on the ETag) so two runs
+  can't process the same job.
+
+## 7. Decided and still open
+
+Decided (see `decisions.md`): commit straight to `main` (D3); Netlify Free plan (D4);
+fine-grained personal access token (D5).
+
+Still open:
 
 - Single password vs Netlify Identity / OAuth (single password is simplest for one user).
-- Commit straight to `main` vs branch + Deploy Preview (see §4).
-- Whether `.claude/agents/**` should itself be editable by agents (it changes their
-  own prompts — default **no**).
+- Whether `.claude/agents/**` should itself be editable by agents through the console
+  (it changes their own prompts — default **no**; in the repo only `agent-builder` edits
+  them).

@@ -16,6 +16,7 @@ Researched 2026-11-26.
 | 03 | [Architecture](03-architecture.md) | Static Netlify site + Netlify Functions, limits, Blobs, env vars, repo layout, `netlify.toml` |
 | 04 | [Agent Console](04-agent-console.md) | Listing `.claude/agents`, chat via a function, propose → Approve → GitHub commit → redeploy, security, long jobs |
 | 05 | [Testing and accessibility](05-testing-and-accessibility.md) | Unit / function / e2e tests, PWA checks, WCAG 2.2 AA checklist |
+| — | [Decisions](decisions.md) | The owner's fixed decisions (D1–D5) and their consequences |
 | — | [Expert roster](expert-roster.md) | The 12 expert agents, their jobs, shared skills and sign-off rules |
 
 ## Key decisions at a glance
@@ -40,7 +41,7 @@ See [expert-roster.md](expert-roster.md): 12 expert agents, their jobs, shared s
 
 ## Not verified in this pass (read the docs before building)
 
-- NWS API (`api.weather.gov`) alerts, NOAA CO-OPS tide predictions
+- NWS API (`api.weather.gov`) alerts, NOAA CO-OPS tide predictions, and the exact NWS
+  surf-zone / rip-current page URLs to link to (D2)
 - GitHub Git Data API for atomic multi-file commits
-- Whether background functions are included in the Netlify plan in use
 - Open-Meteo licence/attribution wording (CC BY 4.0 expected)

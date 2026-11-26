@@ -4,7 +4,7 @@
 Functions for the Claude and GitHub calls, and **no other servers**.
 
 This roster lists the expert agents needed to design, build, test and deploy Flood and
-to run its Agent Console. Each one will live in `.claude/agents/<name>.md`. Eleven roles
+to run its Agent Console. Each one is defined in `.claude/agents/<name>.md` (built 2026-11-26). Eleven roles
 were required. One more was added because the app really needs it (see §3).
 
 ## 1. The team
@@ -54,6 +54,37 @@ that owns the skill and reviews others' work in it.
 | **S21 Web security headers** | CSP, `connect-src` allow-list, `frame-ancestors`, referrer and permissions policies | security-engineer | netlify-engineer, pwa-mobile-engineer |
 | **S22 Automated testing** | Vitest unit and function tests with mocked APIs, Playwright end-to-end (offline, mocked network), CI gate | qa-engineer | weather-risk-scientist, agent-console-engineer, security-engineer, open-meteo-integrator |
 | **S23 Accessibility and PWA auditing** | axe-core, Lighthouse, manual VoiceOver/TalkBack checks, iPhone and Android install checks | qa-engineer | ux-designer-apple-hig, pwa-mobile-engineer |
+
+### Skill folders
+
+Each skill is a project skill at `.claude/skills/<folder>/SKILL.md`, and each agent in
+`.claude/agents/` lists its skills in the `skills:` field exactly as in the matrix below.
+
+| Skill | Folder |
+|---|---|
+| S1 | `official-docs-research` |
+| S2 | `team-orchestration` |
+| S3 | `agent-authoring` |
+| S4 | `architecture-decisions` |
+| S5 | `code-review-git` |
+| S6 | `open-meteo-api` |
+| S7 | `flood-risk-science` |
+| S8 | `risk-scoring-code` |
+| S9 | `vanilla-web-frontend` |
+| S10 | `pwa-platform` |
+| S11 | `liquid-glass-visual-design` |
+| S12 | `apple-hig-ux` |
+| S13 | `accessibility-wcag` |
+| S14 | `netlify-functions` |
+| S15 | `netlify-blobs` |
+| S16 | `netlify-deploy-config` |
+| S17 | `claude-messages-api` |
+| S18 | `github-contents-api` |
+| S19 | `auth-and-secrets` |
+| S20 | `agent-safety` |
+| S21 | `web-security-headers` |
+| S22 | `automated-testing` |
+| S23 | `a11y-pwa-auditing` |
 
 ### Skill matrix
 
